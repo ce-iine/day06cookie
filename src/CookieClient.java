@@ -28,7 +28,7 @@ public class CookieClient {
             Console cons = System.console();
             String line = cons.readLine("Please enter a message: ");
 
-            bw.write(line);
+            bw.write(line + "\n");
             // bw.newLine(); // can bw.append() also - .newLine() Writes a line separator.
             // is not necessarily a single newline ('\n') character.
             bw.flush();

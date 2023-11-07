@@ -10,7 +10,6 @@ import java.net.Socket;
 public class CookieServer {
 
     public static final int PORT = 3000;
-    // static String lineFromFile = "";
 
     public static void main(String[] args) throws Exception {
 
@@ -22,7 +21,7 @@ public class CookieServer {
                 break;
             case 2:
                 fortunesfile = args[0];
-                port = Integer.parseInt(args[1]); // what does this do
+                port = Integer.parseInt(args[1]);
                 break;
             default:
                 System.err.println("Argument error");
@@ -61,31 +60,19 @@ public class CookieServer {
                 System.out.printf("%d fortunes requested:\n", lineAmt);
 
                 fortunes.get(lineAmt).stream()
-                    .map(l -> "%s\n".formatted(l))
-                    .forEach(l -> {
-                        try {
-                            System.out.println(">>> line = " + l);
-                            bw.write(l);
-                            bw.flush();
-                        } catch (Exception ex) {}
-                    });
-                }
-                is.close();
-                os.close();
-            } 
+                        .map(l -> "%s\n".formatted(l))
+                        .forEach(l -> {
+                            try {
+                                System.out.println(">>> line = " + l);
+                                bw.write(l);
+                                bw.flush();
+                            } catch (Exception ex) {
+                            }
+                        });
+            }
+            is.close();
+            os.close();
+            client.close();
         }
     }
-
-// File fileToRead = new File(args[0]);
-// FileReader fr = new FileReader(fileToRead);
-// BufferedReader filebr = new BufferedReader(fr);
-
-// OutputStream os = client.getOutputStream();
-// OutputStreamWriter osw = new OutputStreamWriter(os);
-// BufferedWriter bw = new BufferedWriter(osw);
-
-// for (int i = 1; i <= lineAmt; i++) {
-// lineFromFile = filebr.readLine();
-// System.out.println(lineFromFile);
-// bw.write(lineFromFile);
-// }
+}

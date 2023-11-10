@@ -27,15 +27,18 @@ public class CookieClient {
         while (true) {
             Console cons = System.console();
             String line = cons.readLine("Please enter a message: ");
+            line = line.trim() + "\n";
 
-            bw.write(line + "\n");
-            // bw.newLine(); // can bw.append() also - .newLine() Writes a line separator.
-            // is not necessarily a single newline ('\n') character.
+            bw.write(line);
             bw.flush();
 
             while (true) {
                 String reply = br.readLine();
-                System.out.printf("Cookie fortunes:\n %s\n", reply);
+                reply =reply.trim();
+                if ("end".equals(reply)){
+                    break;
+                }
+                System.out.printf("Cookie fortune:\n %s\n\n", reply);
             }
         }
 

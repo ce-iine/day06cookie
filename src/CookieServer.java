@@ -55,20 +55,40 @@ public class CookieServer {
                 String line = br.readLine();
                 System.out.printf("CLIENT REQUEST: %s\n", line);
 
-                String[] getWords = line.split(" "); // stores the string the client input into a list
-                Integer lineAmt = Integer.parseInt(getWords[1]); // convert the cookie 'number' into an int
-                System.out.printf("%d fortunes requested:\n", lineAmt);
+                String[] getWords = line.split(" "); // stores the string the client input into a array
+                String action = getWords[0];
+                int lineAmt = 1;
 
-                fortunes.get(lineAmt).stream()
-                        .map(l -> "%s\n".formatted(l))
-                        .forEach(l -> {
-                            try {
-                                System.out.println(">>> line = " + l);
-                                bw.write(l);
-                                bw.flush();
-                            } catch (Exception ex) {
-                            }
-                        });
+                switch (action) {
+                    case "cookie":
+                        if (getWords.length > 1) {
+                            lineAmt = Integer.parseInt(getWords[1]); // convert the cookie 'number' into an int
+                            System.out.printf("%d fortunes requested:\n", lineAmt);
+                        }
+                        fortunes.get(lineAmt).stream()
+                            .map(l -> "%s\n".formatted(l))
+                            .forEach(l -> {
+                                try {
+                                    System.out.println(">>> line = " + l);
+                                    bw.write(l);
+                                    bw.flush();
+                                } catch (Exception ex) {
+                                }
+                            });
+                            bw.write("end\n");
+                            bw.flush();
+                        break;
+
+                    case "end":
+                        System.out.println("Bye bye");
+                        stop = true;
+                        break;
+
+                    default:
+                    bw.write("end\n");
+                    bw.flush();
+
+                }
             }
             is.close();
             os.close();
